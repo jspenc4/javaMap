@@ -2,21 +2,19 @@ package com.jimspencer;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Tract {
 
 	double origLong=0.0;
 	double origLat=0.0;
 	double bestPot;
-	private ArrayList<Tract> contents = new ArrayList<>();;
+	private ArrayList<Tract> contents = new ArrayList<>();
 	double x;
 	double y;
 	double n;
-	Integer origId =-1;
-//	String debugId;
+	Integer origId;
 	Tract fav = null;
-	Tract left = null;
-	Tract right = null;
 
 
 	public Tract(String str, Integer id) {
@@ -74,13 +72,10 @@ public class Tract {
 		}
 
 		this.origId = bestI.origId;
-//		debugId = bestI.debugId +  ":" + bestJ.debugId;
 		this.x = (bestI.x * bestI.n + bestJ.x * bestJ.n) / (bestI.n + bestJ.n);
 		this.y = (bestI.y * bestI.n + bestJ.y * bestJ.n) / (bestI.n + bestJ.n);
 		this.n = bestI.n + bestJ.n;
 		this.bestPot = 0.0;
-//			node.left = bestI;
-//			node.right = bestJ;
 		if(bestJ.contentsNull()) {
 			System.out.println("found a null");
 		}
@@ -110,14 +105,8 @@ public class Tract {
 	}
 
 	public void contentsAddAll(Tract t) {
-		try {
-			if(t==null || t.contents == null) {
-				System.out.println("jim adding null wont work.");
-			}
-			contents.addAll(t.contents);
-		} catch (Error e) {
-			System.out.println("out of memory");
-		}
-
+        Objects.requireNonNull(t, "Cannot add contents from null tract");
+        Objects.requireNonNull(t.contents, "Cannot add null contents");
+        contents.addAll(t.contents);
 	}
 }

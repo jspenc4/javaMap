@@ -1,7 +1,6 @@
 package com.jimspencer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MapEdge {
 	int edgeId;
