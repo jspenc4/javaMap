@@ -47,12 +47,36 @@ def reshape_to_grid(df):
 
     return lon_grid, lat_grid, potential_grid
 
-def create_surface_plot(lon_grid, lat_grid, potential_grid, title="World Population Gravitational Potential"):
+def create_surface_plot(lon_grid, lat_grid, potential_grid, title="World Population Gravitational Potential",
+                        camera_eye=None):
     """Create interactive 3D surface plot."""
     print("Creating 3D surface plot...")
 
     # Normalize potential for better visualization (log scale works well for population data)
     z_normalized = np.log10(potential_grid + 1)  # +1 to avoid log(0)
+
+    # Calculate aspect ratio to make grid squares appear square when viewed from above
+    # At equator, 1 degree lon = 1 degree lat in distance
+    # Use average latitude to determine proper x/y ratio
+    avg_lat = np.nanmean(lat_grid)
+    cos_avg_lat = np.cos(np.radians(avg_lat))
+
+    # Aspect ratio: longitude range needs to be compressed by cos(lat)
+    lon_range = np.nanmax(lon_grid) - np.nanmin(lon_grid)
+    lat_range = np.nanmax(lat_grid) - np.nanmin(lat_grid)
+
+    # Calculate aspect to make grid squares appear square
+    aspect_x = lon_range * cos_avg_lat
+    aspect_y = lat_range
+
+    # Normalize so y=1
+    aspect_ratio_x = aspect_x / aspect_y
+    aspect_ratio_y = 1.0
+    aspect_ratio_z = 0.5  # Vertical exaggeration for drama
+
+    # Default camera: looking down from above, north is up
+    if camera_eye is None:
+        camera_eye = dict(x=0, y=0, z=2.5)  # Directly above, looking down
 
     fig = go.Figure(data=[go.Surface(
         x=lon_grid,
@@ -88,10 +112,11 @@ def create_surface_plot(lon_grid, lat_grid, potential_grid, title="World Populat
             yaxis_title='Latitude',
             zaxis_title='log₁₀(Gravitational Potential)',
             camera=dict(
-                eye=dict(x=1.5, y=1.5, z=1.3)  # Initial camera angle
+                eye=camera_eye,
+                up=dict(x=0, y=1, z=0)  # North is up
             ),
             aspectmode='manual',
-            aspectratio=dict(x=2, y=1, z=0.5)  # Adjust vertical exaggeration
+            aspectratio=dict(x=aspect_ratio_x, y=aspect_ratio_y, z=aspect_ratio_z)
         ),
         width=1200,
         height=800,
@@ -122,91 +147,86 @@ def create_hemisphere_view(lon_grid, lat_grid, potential_grid, hemisphere='weste
     lat_subset = np.where(mask, lat_grid, np.nan)
     potential_subset = np.where(mask, potential_grid, np.nan)
 
-    return create_surface_plot(lon_subset, lat_subset, potential_subset, title)
+    # Start with view from above (north up), slightly angled for depth
+    camera = dict(x=0, y=-0.3, z=2.0)  # Slight south tilt, mostly overhead
+
+    return create_surface_plot(lon_subset, lat_subset, potential_subset, title, camera_eye=camera)
 
 def create_guided_tour(lon_grid, lat_grid, potential_grid):
     """Create a guided tour with interesting viewpoints."""
     print("Creating guided tour with key viewpoints...")
 
     # Define interesting camera positions
+    # camera.eye: position relative to center. z=positive is above, y=positive is north, x=positive is east
+    # For north-up views: start from above (z=2+) with slight tilt
     viewpoints = [
         {
             'name': 'Golden Triangle Valley',
             'description': 'Fly through the valley between India and China population mountains',
-            'camera': dict(eye=dict(x=-0.5, y=1.8, z=0.3)),
-            'center': dict(x=98, y=20, z=0),  # Burma/Myanmar area
+            'camera': dict(x=0, y=-0.5, z=1.5),  # Equatorial - moderate tilt for depth
             'lon_range': (85, 110),
             'lat_range': (15, 30)
         },
         {
             'name': 'Sahara Desert Valley',
             'description': 'Massive population gap between North and Sub-Saharan Africa',
-            'camera': dict(eye=dict(x=0.3, y=1.5, z=0.8)),
-            'center': dict(x=15, y=20, z=0),
+            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
             'lon_range': (-10, 40),
             'lat_range': (0, 40)
         },
         {
-            'name': 'Himalayan Barrier',
-            'description': 'Population ridge along Himalayas separating India from China',
-            'camera': dict(eye=dict(x=1.2, y=1.5, z=0.6)),
-            'center': dict(x=85, y=30, z=0),
+            'name': 'Himalayan Valley',
+            'description': 'The Himalayas appear as a population valley - the Ganges plain (Grand Trunk Road) forms the dramatic ridge',
+            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
             'lon_range': (70, 100),
             'lat_range': (25, 40)
         },
         {
             'name': 'Tokyo-Osaka Peak',
             'description': 'Sharp population spike in Japan',
-            'camera': dict(eye=dict(x=1.0, y=0.8, z=1.5)),
-            'center': dict(x=138, y=36, z=0),
+            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
             'lon_range': (130, 145),
             'lat_range': (30, 42)
         },
         {
             'name': 'Northeast US Megalopolis',
             'description': 'Ridge of connected population peaks from DC to Boston',
-            'camera': dict(eye=dict(x=-1.2, y=1.0, z=1.2)),
-            'center': dict(x=-75, y=40, z=0),
+            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
             'lon_range': (-80, -70),
             'lat_range': (37, 43)
         },
         {
             'name': 'Nile River Ridge',
             'description': 'Population corridor cutting through Sahara desert valley',
-            'camera': dict(eye=dict(x=0.5, y=1.8, z=0.5)),
-            'center': dict(x=31, y=26, z=0),
+            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
             'lon_range': (28, 34),
             'lat_range': (22, 32)
         },
         {
             'name': 'Amazon Basin Valley',
             'description': 'Low population between Andean and Brazilian coastal mountains',
-            'camera': dict(eye=dict(x=-0.8, y=1.2, z=0.8)),
-            'center': dict(x=-62, y=-5, z=0),
+            'camera': dict(x=0, y=0.5, z=1.5),  # Southern hemisphere - moderate north tilt
             'lon_range': (-75, -50),
             'lat_range': (-12, 2)
         },
         {
             'name': 'Australian Outback',
             'description': 'Flat desert valley with coastal city spikes on edges',
-            'camera': dict(eye=dict(x=1.5, y=-1.2, z=0.7)),
-            'center': dict(x=135, y=-25, z=0),
+            'camera': dict(x=0, y=0.5, z=1.5),  # Southern hemisphere - moderate north tilt
             'lon_range': (115, 155),
             'lat_range': (-40, -10)
         },
         {
             'name': 'Java Population Ridge',
             'description': 'Dense continuous population along Indonesian island',
-            'camera': dict(eye=dict(x=1.0, y=-0.5, z=1.3)),
-            'center': dict(x=110, y=-7, z=0),
+            'camera': dict(x=0, y=0.5, z=1.5),  # Southern hemisphere - moderate north tilt
             'lon_range': (105, 115),
             'lat_range': (-10, -5)
         },
         {
             'name': 'Trans-Siberian Corridor',
             'description': 'Population ridge connecting European Russia to Pacific',
-            'camera': dict(eye=dict(x=0.8, y=2.0, z=0.4)),
-            'center': dict(x=90, y=55, z=0),
+            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
             'lon_range': (30, 140),
             'lat_range': (50, 65)
         }
@@ -221,6 +241,15 @@ def create_guided_tour(lon_grid, lat_grid, potential_grid):
         lon_subset = np.where(mask, lon_grid, np.nan)
         lat_subset = np.where(mask, lat_grid, np.nan)
         potential_subset = np.where(mask, potential_grid, np.nan)
+
+        # Calculate proper aspect ratio for this region
+        avg_lat = np.nanmean(lat_subset)
+        cos_avg_lat = np.cos(np.radians(avg_lat))
+        lon_range = vp['lon_range'][1] - vp['lon_range'][0]
+        lat_range = vp['lat_range'][1] - vp['lat_range'][0]
+        aspect_x = (lon_range * cos_avg_lat) / lat_range
+        aspect_y = 1.0
+        aspect_z = 0.6  # Vertical exaggeration
 
         # Create figure
         z_normalized = np.log10(potential_subset + 1)
@@ -244,9 +273,12 @@ def create_guided_tour(lon_grid, lat_grid, potential_grid):
                 xaxis_title='Longitude',
                 yaxis_title='Latitude',
                 zaxis_title='log₁₀(Potential)',
-                camera=vp['camera'],
+                camera=dict(
+                    eye=vp['camera'],
+                    up=dict(x=0, y=1, z=0)  # North is up
+                ),
                 aspectmode='manual',
-                aspectratio=dict(x=2, y=1, z=0.7)
+                aspectratio=dict(x=aspect_x, y=aspect_y, z=aspect_z)
             ),
             width=1200,
             height=800,
