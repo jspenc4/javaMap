@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hierarchical Population Clustering</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+        .viz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .viz-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .viz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .viz-card h3 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        .viz-card p {
+            color: #666;
+            font-size: 0.95em;
+        }
+        .viz-card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .viz-card a:hover {
+            background: #45a049;
+        }
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <h1>Hierarchical Population Clustering</h1>
+        <p>Interactive 3D visualizations of global population distribution using gravitational potential-based clustering.</p>
+        <p>This project models population as a gravitational field, where each person contributes to a "potential" that attracts others. The resulting 3D surfaces show population concentration as terrain - cities become mountain peaks, deserts become valleys.</p>
+        <p><strong>Algorithm:</strong> <code>potential = Σ(population / distance⁴)</code></p>
+        <p>All visualizations are fully interactive - rotate, zoom, and fly through the population landscape.</p>
+    </div>
+
+    <h2>World Overview</h2>
+    <div class="viz-grid">
+        <div class="viz-card">
+            <h3>🌍 Complete World</h3>
+            <p>Global population surface showing all continents. Sharp peaks at major population centers (Tokyo, Mumbai, NYC, São Paulo).</p>
+            <a href="interactive/world_surface_3d.html">View Interactive 3D →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🌎 Western Hemisphere</h3>
+            <p>Americas from Alaska to Patagonia. See the population ridge along the East Coast and isolated peaks of West Coast cities.</p>
+            <a href="interactive/western_hemisphere_3d.html">View Interactive 3D →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🌏 Eastern Hemisphere</h3>
+            <p>Europe, Africa, and Asia. The massive population mountains of India and China dominate the landscape.</p>
+            <a href="interactive/eastern_hemisphere_3d.html">View Interactive 3D →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🗾 Asia Pacific</h3>
+            <p>Focused view of Asia showing the dramatic population terrain from India through Japan and Southeast Asia.</p>
+            <a href="interactive/asia_pacific_3d.html">View Interactive 3D →</a>
+        </div>
+    </div>
+
+    <h2>Guided Tour - Featured Viewpoints</h2>
+    <p>These views are pre-positioned at interesting geographic features. Each opens ready to explore.</p>
+
+    <div class="viz-grid">
+        <div class="viz-card">
+            <h3>⛰️ Golden Triangle Valley</h3>
+            <p><strong>★ Recommended first view</strong><br>
+            Fly through the valley between India and China population mountains in the Burma/Myanmar region.</p>
+            <a href="interactive/tour_golden_triangle_valley.html">Explore Valley →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🏜️ Sahara Desert Valley</h3>
+            <p>Massive population gap separating North and Sub-Saharan Africa. The desert appears as a deep valley in the population terrain.</p>
+            <a href="interactive/tour_sahara_desert_valley.html">View Desert →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🏔️ Himalayan Barrier</h3>
+            <p>Population ridge along the Himalayas showing how the mountain range separates Indian and Chinese population centers.</p>
+            <a href="interactive/tour_himalayan_barrier.html">View Ridge →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🗼 Tokyo-Osaka Peak</h3>
+            <p>Sharp population spike showing Japan's concentrated megalopolis. One of the tallest peaks in the global surface.</p>
+            <a href="interactive/tour_tokyo_osaka_peak.html">View Peak →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🏙️ Northeast US Megalopolis</h3>
+            <p>Connected ridge of population peaks from Washington DC through New York to Boston.</p>
+            <a href="interactive/tour_northeast_us_megalopolis.html">View Corridor →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🏞️ Nile River Ridge</h3>
+            <p>Thin population corridor cutting through the Sahara desert valley, following the Nile from Cairo to Khartoum.</p>
+            <a href="interactive/tour_nile_river_ridge.html">View Nile →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🌳 Amazon Basin Valley</h3>
+            <p>Low population jungle between Andean and Brazilian coastal population mountains.</p>
+            <a href="interactive/tour_amazon_basin_valley.html">View Basin →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🦘 Australian Outback</h3>
+            <p>Flat desert plateau with coastal city spikes on the edges. Shows extreme population concentration on coasts.</p>
+            <a href="interactive/tour_australian_outback.html">View Outback →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🌋 Java Population Ridge</h3>
+            <p>Dense continuous population along the Indonesian island of Java, one of the most densely populated regions on Earth.</p>
+            <a href="interactive/tour_java_population_ridge.html">View Java →</a>
+        </div>
+        <div class="viz-card">
+            <h3>🚂 Trans-Siberian Corridor</h3>
+            <p>Population ridge connecting European Russia to the Pacific coast across thousands of miles of sparse Siberia.</p>
+            <a href="interactive/tour_trans_siberian_corridor.html">View Corridor →</a>
+        </div>
+    </div>
+
+    <div class="intro" style="margin-top: 40px;">
+        <h2>About the Project</h2>
+        <p>This visualization is part of a larger research project on hierarchical population clustering. The same algorithm that creates these 3D surfaces also generates spider-web network maps showing how populations merge hierarchically from neighborhoods to continents.</p>
+        <p>The algorithm discovers natural regional boundaries without prior geographic knowledge - it finds that Central Park divides Manhattan, that the Sahara separates Africa, and that the Grand Trunk Road corridor forms a coherent region spanning Pakistan, India, and Bangladesh.</p>
+        <p><strong>Source code and documentation:</strong> <a href="https://github.com/yourusername/javaMap">GitHub Repository</a></p>
+        <p><strong>Data source:</strong> Gridded Population of the World (GPW v4), 15-arcsecond resolution</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Compiled class files
+*.class
+
+# Data and results files
+res/*.csv
+res/*.xlsx
+res/*.ods
+res/~$*.xlsx
+censusBlockGroupResults.csv
+
+# Keep example/template files if needed (uncomment to allow specific files)
+# !res/test.csv
