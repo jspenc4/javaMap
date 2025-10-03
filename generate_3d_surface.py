@@ -74,9 +74,9 @@ def create_surface_plot(lon_grid, lat_grid, potential_grid, title="World Populat
     aspect_ratio_y = 1.0
     aspect_ratio_z = 0.5  # Vertical exaggeration for drama
 
-    # Default camera: looking down from above, north is up
+    # Default camera: angled view for better depth perception
     if camera_eye is None:
-        camera_eye = dict(x=0, y=0, z=2.5)  # Directly above, looking down
+        camera_eye = dict(x=1.5, y=-1.0, z=1.2)  # Side angle with tilt for dramatic depth
 
     fig = go.Figure(data=[go.Surface(
         x=lon_grid,
@@ -147,8 +147,8 @@ def create_hemisphere_view(lon_grid, lat_grid, potential_grid, hemisphere='weste
     lat_subset = np.where(mask, lat_grid, np.nan)
     potential_subset = np.where(mask, potential_grid, np.nan)
 
-    # Start with view from above (north up), slightly angled for depth
-    camera = dict(x=0, y=-0.3, z=2.0)  # Slight south tilt, mostly overhead
+    # Angled view for better depth perception
+    camera = dict(x=1.5, y=-1.0, z=1.2)  # Side angle with tilt for dramatic depth
 
     return create_surface_plot(lon_subset, lat_subset, potential_subset, title, camera_eye=camera)
 
@@ -158,75 +158,75 @@ def create_guided_tour(lon_grid, lat_grid, potential_grid):
 
     # Define interesting camera positions
     # camera.eye: position relative to center. z=positive is above, y=positive is north, x=positive is east
-    # For north-up views: start from above (z=2+) with slight tilt
+    # Angled views for better depth perception
     viewpoints = [
         {
             'name': 'Golden Triangle Valley',
             'description': 'Fly through the valley between India and China population mountains',
-            'camera': dict(x=0, y=-0.5, z=1.5),  # Equatorial - moderate tilt for depth
+            'camera': dict(x=1.5, y=-1.0, z=1.2),  # Side angle with dramatic depth
             'lon_range': (85, 110),
             'lat_range': (15, 30)
         },
         {
             'name': 'Sahara Desert Valley',
             'description': 'Massive population gap between North and Sub-Saharan Africa',
-            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
+            'camera': dict(x=1.5, y=-1.0, z=1.2),  # Side angle with dramatic depth
             'lon_range': (-10, 40),
             'lat_range': (0, 40)
         },
         {
             'name': 'Himalayan Valley',
             'description': 'The Himalayas appear as a population valley - the Ganges plain (Grand Trunk Road) forms the dramatic ridge',
-            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
+            'camera': dict(x=1.5, y=-1.0, z=1.2),  # Side angle with dramatic depth
             'lon_range': (70, 100),
             'lat_range': (25, 40)
         },
         {
             'name': 'Tokyo-Osaka Peak',
             'description': 'Sharp population spike in Japan',
-            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
+            'camera': dict(x=1.5, y=-1.0, z=1.2),  # Side angle with dramatic depth
             'lon_range': (130, 145),
             'lat_range': (30, 42)
         },
         {
             'name': 'Northeast US Megalopolis',
             'description': 'Ridge of connected population peaks from DC to Boston',
-            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
+            'camera': dict(x=1.5, y=-1.0, z=1.2),  # Side angle with dramatic depth
             'lon_range': (-80, -70),
             'lat_range': (37, 43)
         },
         {
             'name': 'Nile River Ridge',
             'description': 'Population corridor cutting through Sahara desert valley',
-            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
+            'camera': dict(x=1.5, y=-1.0, z=1.2),  # Side angle with dramatic depth
             'lon_range': (28, 34),
             'lat_range': (22, 32)
         },
         {
             'name': 'Amazon Basin Valley',
             'description': 'Low population between Andean and Brazilian coastal mountains',
-            'camera': dict(x=0, y=0.5, z=1.5),  # Southern hemisphere - moderate north tilt
+            'camera': dict(x=1.5, y=1.0, z=1.2),  # Southern hemisphere - flip y for north tilt
             'lon_range': (-75, -50),
             'lat_range': (-12, 2)
         },
         {
             'name': 'Australian Outback',
             'description': 'Flat desert valley with coastal city spikes on edges',
-            'camera': dict(x=0, y=0.5, z=1.5),  # Southern hemisphere - moderate north tilt
+            'camera': dict(x=1.5, y=1.0, z=1.2),  # Southern hemisphere - flip y for north tilt
             'lon_range': (115, 155),
             'lat_range': (-40, -10)
         },
         {
             'name': 'Java Population Ridge',
             'description': 'Dense continuous population along Indonesian island',
-            'camera': dict(x=0, y=0.5, z=1.5),  # Southern hemisphere - moderate north tilt
+            'camera': dict(x=1.5, y=1.0, z=1.2),  # Southern hemisphere - flip y for north tilt
             'lon_range': (105, 115),
             'lat_range': (-10, -5)
         },
         {
             'name': 'Trans-Siberian Corridor',
             'description': 'Population ridge connecting European Russia to Pacific',
-            'camera': dict(x=0, y=-0.5, z=1.5),  # Northern hemisphere - moderate south tilt
+            'camera': dict(x=1.5, y=-1.0, z=1.2),  # Side angle with dramatic depth
             'lon_range': (30, 140),
             'lat_range': (50, 65)
         }
