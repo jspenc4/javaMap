@@ -18,7 +18,7 @@ Lines connecting merged population centers, colored by merge order.
 *74,000 US census tracts merging hierarchically*
 
 ![World Population](res/worldPrintMap.pdf)
-*Global population at 15-arcsecond resolution*
+*Global population at 15 arc-minute resolution*
 
 ### 3D Gravitational Potential Surface
 
@@ -81,7 +81,7 @@ Cosine lookup table for latitudes 0-89° avoids repeated trig calculations.
 
 - **US Census Bureau:** Census tracts (~74k) and block groups (~220k)
 - **GPW v4:** Gridded Population of the World (CIESIN)
-  - 15-arcsecond resolution (~463m at equator)
+  - 15 arc-minute resolution (~28km at equator, ~1 million grid cells)
   - 2015 population adjusted to UN estimates
 
 ## Project Structure
@@ -166,7 +166,7 @@ Complete hierarchy annotated down to 3M population in `docs/world tree.docx`. Th
 Cross-validation across multiple datasets confirms robustness:
 - US census tracts (74k)
 - US block groups (220k)
-- World 15-arcsecond grid (millions of cells)
+- World 15 arc-minute grid (~1 million cells)
 
 All converge on the same major regional boundaries.
 
