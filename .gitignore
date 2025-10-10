@@ -6,6 +6,19 @@ out/
 # Compiled class files
 *.class
 
+# Python virtual environment
+.venv/
+
+# OS files
+.DS_Store
+
+# Large output files (can be regenerated)
+output/*.html
+
+# Large visualization files
+res/*.png
+res/*.json
+
 # Data and results files
 res/*.csv
 res/*.xlsx
@@ -13,5 +26,6 @@ res/*.ods
 res/~$*.xlsx
 censusBlockGroupResults.csv
 
-# Keep example/template files if needed (uncomment to allow specific files)
-# !res/test.csv
+# Keep smaller PDFs and preview images
+!res/*.pdf
+!res/*_preview.jpg
