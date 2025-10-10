@@ -301,7 +301,7 @@ def create_obj_mesh(lon_grid, lat_grid, height_grid, output_path,
 
 def main():
     # Path to the potential data CSV
-    csv_path = Path.home() / "Google Drive" / "My Drive" / "gridded" / "res" / "newPot3.csv"
+    csv_path = Path.home() / "git" / "gridded" / "res" / "newPot3.csv"
 
     if not csv_path.exists():
         print(f"ERROR: File not found: {csv_path}")

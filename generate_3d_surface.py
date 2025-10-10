@@ -291,7 +291,7 @@ def create_guided_tour(lon_grid, lat_grid, potential_grid):
 
 def main():
     # Path to the potential data CSV
-    csv_path = Path.home() / "Google Drive" / "My Drive" / "gridded" / "res" / "newPot3.csv"
+    csv_path = Path.home() / "git" / "gridded" / "res" / "newPot3.csv"
 
     if not csv_path.exists():
         print(f"ERROR: File not found: {csv_path}")
