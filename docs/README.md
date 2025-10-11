@@ -178,7 +178,33 @@ This methodology has potential value across multiple disciplines:
 
 ## Future Directions
 
-- **Population-constrained clustering** for equal-population districts
-- **Multi-objective optimization** balancing natural boundaries vs demographic requirements
+### Redistricting as Spanning Tree Optimization
+
+The spanning tree provides a novel framework for evaluating redistricting plans:
+
+**Problem Statement:** Partition the population into N districts with equal population, minimizing damage to natural settlement structure.
+
+**Key Insight:** Traditional gerrymandering metrics (compactness, partisan fairness) miss a crucial dimension - **do districts respect natural communities of interest?**
+
+- A compact circular district that cuts through Manhattan and rural Connecticut "looks fair" but destroys natural communities
+- Maryland's 3rd district looks bizarre but might follow the Baltimore-Washington corridor structure
+- Some districts appear gerrymandered by traditional metrics yet follow real settlement patterns
+
+**Proposed Metric:** Measure the total population potential destroyed by district boundaries
+```
+Cost(partition) = Σ (edge weights of cut spanning tree edges)
+```
+
+**Properties:**
+- Quantifies "community splitting" - breaking high-potential connections hurts score
+- Natural boundaries (mountain ranges, deserts) cost little to cross
+- Allows "auction" approach: citizens propose maps, best score wins
+- Scale-invariant: can optimize at coarse resolution then refine
+
+**The USA 6-region map demonstrates this:** Boundaries form naturally where few/weak connections exist. Optimal redistricting would preserve this structure while satisfying population equality.
+
+### Other Directions
+
 - **Interactive web visualization** with real-time parameter adjustment
-- **Comparative analysis** with traditional redistricting methods
+- **Comparative analysis** scoring existing district maps vs historical alternatives
+- **Mixed-resolution datasets** combining fine-scale census data with coarse international grids
