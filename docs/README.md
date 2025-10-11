@@ -21,8 +21,30 @@ Distance relationships use gravitational physics:
 potential = (population1 * population2) / distance^4
 ```
 
-**Heuristic for d^4**:
-The fourth power emerged from practical considerations: when considering a square grid with mesh size halved, the algorithm should ideally maintain similar "goodness" with identical population density. While not rigorously proven optimal, this scaling heuristic provided the d^4 relationship.
+**Why d^4? Scale Invariance Argument**:
+
+The fourth power emerges from requiring **auction fairness across grid resolutions**.
+
+Consider two regions with identical population density bidding in the auction:
+- **Region A**: grid size 1, population 1 per cell, cells distance 1 apart
+- **Region B**: grid size 2, population 4 per cell (same density), cells distance 2 apart
+
+For equal bidding power (no systematic bias toward finer/coarser grids):
+```
+Region A bid: (1 × 1) / 1^n = 1
+Region B bid: (4 × 4) / 2^n = 16 / 2^n
+```
+
+Setting them equal: `16 / 2^n = 1` → `2^n = 16` → **n = 4**
+
+**Result**: The algorithm produces consistent clustering hierarchies regardless of grid resolution. You can mix data sources with different resolutions in a single run:
+
+- World baseline: 15 arc-minute grid (~28km)
+- USA: High-resolution census block groups (~1km)
+- Mexico: Medium-resolution municipal data (~5km)
+- Remote regions: Coarse grid where data is sparse
+
+The algorithm can't tell which regions came from finer data - it only sees population density and distance. This means you can **use whatever data you can get** without worrying about resolution bias.
 
 This creates realistic clustering where:
 - Close populations have strong mutual attraction

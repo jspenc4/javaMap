@@ -104,8 +104,12 @@
         <p>These visualizations show Earth's population distribution through the lens of a <strong>gravitational potential field</strong>.
         Each populated area creates a "pull" that decreases with the cube of distance (1/d³), similar to how gravity works but with population density instead of mass.</p>
 
-        <p><strong>What you're seeing:</strong> The "height" in these maps represents how strongly a location is influenced by nearby populations.
-        Peaks appear where many people live close together (cities, urban corridors), while valleys show remote areas far from population centers.</p>
+        <p><strong>Think of it like a watershed:</strong> Population centers are valleys, remote areas are peaks, and natural boundaries form at the drainage divides.
+        To find where NYC's influence ends and Mexico City's begins, imagine filling each valley with water until the lakes just touch - that's the watershed boundary.</p>
+
+        <p><strong>What you're seeing:</strong> Not population density, but population <em>structure</em> - the natural hierarchy of how settlements connect and cluster.
+        The Himalayas appear as ridges separating India from China. The Grand Trunk Road shows as a major valley spine through the subcontinent.
+        Geographic barriers and corridors emerge automatically from population data alone.</p>
 
         <p><em>Data source: NASA GPWv4 population grid (2020), 15 arc-minute resolution</em></p>
     </div>
@@ -114,8 +118,8 @@
         <div class="gallery-item">
             <img src="images/worldPrintMap_preview.jpg" alt="World Population Potential Map">
             <div class="caption">
-                <h3>World Population Potential</h3>
-                <p>Global view showing major population centers as peaks. Notice the massive clusters in East Asia, India, Europe, and the Eastern United States.</p>
+                <h3>World Population Structure</h3>
+                <p>This is NOT population density - each colored line is a connection in an expanding spanning tree showing how populations naturally cluster. The structure reveals geographic barriers (Sahara, Himalayas) and natural corridors (river valleys, coastlines) that shape human settlement patterns.</p>
             </div>
         </div>
 
@@ -123,24 +127,18 @@
             <img src="images/usa6region.jpg" alt="USA 6 Regions">
             <div class="caption">
                 <h3>USA Regional Analysis</h3>
-                <p>United States divided into 6 regions, showing how population influence varies across the country. The Northeast megalopolis creates the strongest field.</p>
+                <p>Six natural regions emerge from the clustering algorithm. Regional boundaries form where attraction lines don't cross - revealing geographic barriers and low-population zones that naturally separate metropolitan spheres of influence.</p>
             </div>
         </div>
 
         <div class="gallery-item">
-            <img src="images/3dsurface.png" alt="3D Surface Visualization">
-            <div class="caption">
-                <h3>3D Surface View</h3>
-                <p>Three-dimensional representation of the potential field. Dramatic peaks show concentrated urban areas, while smooth gradients reveal population corridors.</p>
-            </div>
-        </div>
-
-        <div class="gallery-item">
-            <img src="images/worldPrintMap.png" alt="High Resolution World Map">
-            <div class="caption">
-                <h3>High Resolution World Map</h3>
-                <p>Detailed global view at full resolution. Zoom in to see individual cities and how their influence spreads across the landscape.</p>
-            </div>
+            <a href="interactive/world_surface_3d.html" style="text-decoration: none; color: inherit;">
+                <img src="images/3dsurface.png" alt="3D Interactive World View">
+                <div class="caption">
+                    <h3>🌍 Interactive 3D World View</h3>
+                    <p>Click to explore the full interactive 3D visualization. Rotate, zoom, and hover over the surface to see population potential values in real-time.</p>
+                </div>
+            </a>
         </div>
     </div>
 
