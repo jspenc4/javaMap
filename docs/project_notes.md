@@ -88,20 +88,18 @@ You already built interactive 3D potential field visualizations using Plotly:
   - Tokyo-Osaka Peak
   - Trans-Siberian Corridor
 
-**Current implementation:** Uses **1/d potential** (population / distance)
-**Location:** `/Users/jim-spencer/Google Drive/My Drive/gridded/src/com/jimspencer/Main.java`
+**Current implementation:** Uses **1/d³ potential** (population / distance³)
+**Location:** `/Users/jim-spencer/git/gridded/src/com/jimspencer/Main.java`
 
-**TODO:** Update to **1/d³ potential** to match the d⁴ clustering algorithm:
-- Integrated force from 1/d⁴ → potential = 1/d³
+**Physical interpretation:** 1/d³ potential derived from 1/d⁴ clustering force:
+- Force: F = (pop₁ × pop₂) / distance⁴
+- Potential: ∫F·dr → Σ(population / distance³)
 - Shows "energy cost" to traverse terrain
 - Saddle points = natural regional boundaries
 
-**The fix:** Line 91 in Main.java:
+**Implementation** (Line 106 in Main.java):
 ```java
-// Current (1/d):
-newPoint.potential += pp.pop / distance(lat, lon, pp.lat, pp.lon);
-
-// Change to (1/d³):
+// Current (1/d³):
 double d = distance(lat, lon, pp.lat, pp.lon);
 newPoint.potential += pp.pop / (d * d * d);
 ```
